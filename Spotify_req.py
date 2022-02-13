@@ -47,3 +47,4 @@ class song_feat:
 
 f = song_feat("https://open.spotify.com/track/4Li2WHPkuyCdtmokzW2007?si=a86e5d02275d4ffa")
 f.get_song_features()
+print(type(f.features['valence']))
