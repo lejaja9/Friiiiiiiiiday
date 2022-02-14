@@ -1,6 +1,5 @@
 import requests
 import base64
-import json
 from ClientId import *
 
 class song_feat:
@@ -45,6 +44,6 @@ class song_feat:
         self.features = res.json()
         #self.features = json.dumps(res.json(), indent=2)
 
-f = song_feat("https://open.spotify.com/track/4Li2WHPkuyCdtmokzW2007?si=a86e5d02275d4ffa")
+f = song_feat("https://open.spotify.com/track/1q3RiD1tIWUpGsNFADMlvl?si=da6dcb46f590423d")
 f.get_song_features()
-print(type(f.features['valence']))
+print(f.features)
