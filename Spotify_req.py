@@ -27,7 +27,9 @@ class song_rec:
 
         self.parameters = None
 
-        self.activities = {'on a run': [('acousticness', 0), ('danceability', 1), ('energy', 4), ('instrumentalness', 1), ('liveness', 0), ('loudness', 3), ('speechiness', 2), ('tempo', 3), ('valence', 2)]}
+        self.activities = {'on a run': [('acousticness', 0), ('danceability', 1), ('energy', 4), ('instrumentalness', 1), ('liveness', 0), ('loudness', 3), ('speechiness', 2), ('tempo', 3), ('valence', 2)], \
+            'on a road trip': [('acousticness', 2), ('danceability', 3), ('energy', 3), ('instrumentalness', 2), ('liveness', 2), ('loudness', 1), ('speechiness', 0), ('tempo', 2), ('valence', 2)], \
+                'going to bed': [('acousticness', 3), ('danceability', 0), ('energy', 1), ('instrumentalness', 2), ('liveness', 0), ('loudness', 1), ('speechiness', 2), ('tempo', 0), ('valence', 3)]}
         
         #parameters for GET
         self.artist_ID = None
@@ -139,11 +141,8 @@ class song_rec:
 
         res = requests.get(url = rec_url, headers = token_header)    
         tracks_api = res.json()
-        # for k in tracks_api['tracks'][0]:
-        #     print(k)
-        #print(tracks_api['tracks'][0])
         for i in range(len(tracks_api['tracks'])):
             print(tracks_api['tracks'][i]['external_urls']['spotify'])
 
-test = song_rec('https://open.spotify.com/track/2BJSMvOGABRxokHKB0OI8i?si=c51ce5681f814a28', 'on a run', 'afternoon', 'hip hop')
+test = song_rec('https://open.spotify.com/track/3TgMcrV32NUKjEG2ujn9eh?si=efa0afdebc74422a', 'going to bed', 'night', 'alternative')
 test.get_song_recommendations()
