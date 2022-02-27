@@ -3,7 +3,7 @@ import base64
 from ClientId import *
 
 class song_rec:
-    """A class that holds song features, activity features, genre and returns recommendations. Taken from the Spotify API."""
+    """A class that holds song features, activity features, and genre and returns recommendations. Taken from the Spotify API. Built with passion and a little frustration."""
 
     def __init__(self, song_link, activity, time_of_day, genre):
         #initial information
@@ -19,17 +19,34 @@ class song_rec:
         self.Afternoon_parameters = {'acousticness': [0.050490359061721196, 0.26284748726402657, 0.5361432660991571, 0.8293365253027448], 'danceability': [0.3645331250385326, 0.5549705897000081, 0.7115274552461305, 0.8525255532474758], 'energy': [0.22170085305720916, 0.4345205314016501, 0.5864102592476328, 0.7252673337673063, 0.8772012590621703], 'instrumentalness': [0.002303065143175055, 0.2045831396598907, 0.523255839818788, 0.8566194039653546], 'liveness': [0.11571788233010737, 0.3247771442018822, 0.6880205858291473], 'loudness': [-22.858784742387314, -12.036591650596531, -7.734759920598487, -4.756980275230353], 'speechiness': [0.051331957540559595, 0.1529872791968842, 0.28566529769478033, 0.447316131793282, 0.8554854992562926], 'tempo': [88.128062894798, 118.80760057100012, 143.48446847875817, 171.29537448764688], 'valence': [0.1754206016542743, 0.36800937108790005, 0.5688401346289101, 0.8085758968840702]}
         self.Evening_parameters = {'acousticness': [0.051187302142530616, 0.2629954578833173, 0.5443586449949921, 0.8563105017492848], 'danceability': [0.28877092078723754, 0.527265145305271, 0.6994024737246376, 0.8441108936258267], 'energy': [0.14940366340223243, 0.4124318215497712, 0.5785720743553215, 0.7222509557052426, 0.8803082618937121], 'instrumentalness': [0.003154300485407463, 0.2800824849090645, 0.6309798578738262, 0.8978986216778286], 'liveness': [0.116978890214073, 0.329885867067773, 0.7033096435947523], 'loudness': [-30.64137521831628, -15.603954342871656, -8.693378697200863, -5.07960733626369], 'speechiness': [0.052176478894036496, 0.15368064548654295, 0.2870441191527784, 0.4474271751216467, 0.8835541269156066], 'tempo': [86.37858981732701, 118.81463727274055, 143.33951924769767, 171.02900275713338], 'valence': [0.1579563989441452, 0.3605310706961407, 0.5629927991264553, 0.8029163276483204]}
         
-        self.Night_events = {'night'}
-        self.Late_events = {'late night', '6 AM'}
-        self.Morning_events = {'sunrise'}
-        self.Afternoon_events = {'afternoon'}
-        self.Evening_events = {'sunset'}
+        self.Night_events = {'night', 'midnight', 'bedtime', "my friend's sleepover"}
+        self.Late_events = {'the twilight zone', '5 AM', 'the crack of dawn'}
+        self.Morning_events = {'breakfast', 'sunrise', 'my first Zoom lecture', 'my daily sprint meeting'}
+        self.Afternoon_events = {'happy hour', 'sunset', 'rush hour', "5 o'clock somewhere"}
+        self.Evening_events = {'8:09 PM', 'dinnertime', 'the afterparty', 'the Bachelor season premier',  'closing time'}
 
         self.parameters = None
 
         self.activities = {'on a run': [('acousticness', 0), ('danceability', 1), ('energy', 4), ('instrumentalness', 1), ('liveness', 0), ('loudness', 3), ('speechiness', 2), ('tempo', 3), ('valence', 2)], \
             'on a road trip': [('acousticness', 2), ('danceability', 3), ('energy', 3), ('instrumentalness', 2), ('liveness', 2), ('loudness', 1), ('speechiness', 0), ('tempo', 2), ('valence', 2)], \
-                'going to bed': [('acousticness', 3), ('danceability', 0), ('energy', 1), ('instrumentalness', 2), ('liveness', 0), ('loudness', 1), ('speechiness', 2), ('tempo', 0), ('valence', 3)]}
+                'going to bed': [('acousticness', 3), ('danceability', 0), ('energy', 1), ('instrumentalness', 2), ('liveness', 0), ('loudness', 1), ('speechiness', 2), ('tempo', 0), ('valence', 3)], \
+                    'taking a shower': [('acousticness', 1), ('danceability', 2), ('energy', 2), ('instrumentalness', 0), ('liveness', 2), ('loudness', 3), ('speechiness', 1), ('tempo', 1), ('valence', 2)], \
+                        'commuting to work': [('acousticness', 1), ('danceability', 1), ('energy', 3), ('instrumentalness', 1), ('liveness', 1), ('loudness', 2), ('speechiness', 4), ('tempo', 1), ('valence', 1)], \
+                            'in the office': [('acousticness', 2), ('danceability', 0), ('energy', 2), ('instrumentalness', 2), ('liveness', 0), ('loudness', 0), ('speechiness', 1), ('tempo', 1), ('valence', 1)], \
+                                'racing to a deadline': [('acousticness', 0), ('danceability', 2), ('energy', 4), ('instrumentalness', 2), ('liveness', 1), ('loudness', 2), ('speechiness', 2), ('tempo', 3), ('valence', 1)], \
+                                    'cooking food': [('acousticness', 2), ('danceability', 2), ('energy', 3), ('instrumentalness', 0), ('liveness', 2), ('loudness', 1), ('speechiness', 1), ('tempo', 1), ('valence', 2)], \
+                                        'washing the dishes': [('acousticness', 3), ('danceability', 1), ('energy', 1), ('instrumentalness', 2), ('liveness', 1), ('loudness', 2), ('speechiness', 2), ('tempo', 2), ('valence', 2)], \
+                                            'studying for an exam': [('acousticness', 2), ('danceability', 1), ('energy', 2), ('instrumentalness', 3), ('liveness', 0), ('loudness', 0), ('speechiness', 1), ('tempo', 0), ('valence', 1)], \
+                                                'enjoying the view': [('acousticness', 3), ('danceability', 1), ('energy', 1), ('instrumentalness', 2), ('liveness', 1), ('loudness', 0), ('speechiness', 0), ('tempo', 0), ('valence', 2)], \
+                                                    'playing Mario Kart': [('acousticness', 1), ('danceability', 2), ('energy', 4), ('instrumentalness', 2), ('liveness', 0), ('loudness', 3), ('speechiness', 1), ('tempo', 3), ('valence', 3)], \
+                                                        'drinking a mimosa': [('acousticness', 2), ('danceability', 1), ('energy', 1), ('instrumentalness', 1), ('liveness', 0), ('loudness', 1), ('speechiness', 1), ('tempo', 1), ('valence', 3)], \
+                                                            'on the dance flooor': [('acousticness', 0), ('danceability', 3), ('energy', 4), ('instrumentalness', 0), ('liveness', 1), ('loudness', 2), ('speechiness', 1), ('tempo', 2), ('valence', 2)], \
+                                                                'filing taxes': [('acousticness', 2), ('danceability', 0), ('energy', 0), ('instrumentalness', 3), ('liveness', 0), ('loudness', 0), ('speechiness', 0), ('tempo', 0), ('valence', 0)], \
+                                                                    'about to rap battle': [('acousticness', 0), ('danceability', 2), ('energy', 4), ('instrumentalness', 0), ('liveness', 2), ('loudness', 3), ('speechiness', 3), ('tempo', 2), ('valence', 2)], \
+                                                                        'feeling 22': [('acousticness', 1), ('danceability', 3), ('energy', 3), ('instrumentalness', 1), ('liveness', 2), ('loudness', 3), ('speechiness', 3), ('tempo', 2), ('valence', 3)], \
+                                                                            'driving a golf kart': [('acousticness', 1), ('danceability', 1), ('energy', 1), ('instrumentalness', 2), ('liveness', 1), ('loudness', 1), ('speechiness', 1), ('tempo', 2), ('valence', 2)], \
+                                                                                'walking the dog': [('acousticness', 1), ('danceability', 1), ('energy', 2), ('instrumentalness', 2), ('liveness', 1), ('loudness', 1), ('speechiness', 2), ('tempo', 2), ('valence', 2)], \
+                                                                                    'getting a pedicure': [('acousticness', 2), ('danceability', 0), ('energy', 1), ('instrumentalness', 3), ('liveness', 0), ('loudness', 0), ('speechiness', 1), ('tempo', 1), ('valence', 2)]}
         
         #parameters for GET
         self.artist_ID = None
@@ -134,7 +151,6 @@ class song_rec:
         token = r.json()['access_token']
 
         rec_url = f"https://api.spotify.com/v1/recommendations?limit=9&market=US&seed_artists={self.artist_ID}&seed_genres={self.genre}&seed_tracks={self.song_ID}&target_acousticness={self.acousticness}&target_danceability={self.danceability}&target_energy={self.energy}&target_instrumentalness={self.instrumentalness}&target_liveness={self.liveness}&target_loudness={self.loudness}&target_speechiness={self.speechiness}&target_tempo={self.tempo}&target_valence={self.valence}"
-        #rec_url = f"https://api.spotify.com/v1/recommendations?limit=9&market=US&seed_artists=3Vl9fyKMIdLMswk8ai3mm9&seed_genres=Pop&seed_tracks=4fK6E2UywZTJIa5kWnCD6x&target_acousticness={str(self.acousticness)}"
         token_header = {
             "Authorization": "Bearer " + token
         }
@@ -144,5 +160,5 @@ class song_rec:
         for i in range(len(tracks_api['tracks'])):
             print(tracks_api['tracks'][i]['external_urls']['spotify'])
 
-test = song_rec('https://open.spotify.com/track/3TgMcrV32NUKjEG2ujn9eh?si=efa0afdebc74422a', 'going to bed', 'night', 'alternative')
+test = song_rec('https://open.spotify.com/track/1sZulwRldumrhOuZZUizal?si=883d1e047ac84f45', 'on a run', 'in the afternoon', 'indie')
 test.get_song_recommendations()
