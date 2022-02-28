@@ -157,8 +157,9 @@ class song_rec:
 
         res = requests.get(url = rec_url, headers = token_header)    
         tracks_api = res.json()
-        for i in range(len(tracks_api['tracks'])):
-            print(tracks_api['tracks'][i]['external_urls']['spotify'])
+        print(tracks_api)
+        # for i in range(len(tracks_api['tracks'])):
+        #     print(tracks_api['tracks'][i]['external_urls']['spotify'])
 
-test = song_rec('https://open.spotify.com/track/1sZulwRldumrhOuZZUizal?si=883d1e047ac84f45', 'on a run', 'in the afternoon', 'indie')
+test = song_rec('https://open.spotify.com/track/6mADjHs6FXdroPzEGW6KVJ?si=6130952bcdfc4a0e', 'on a run', 'sunrise', '2000s rockx')
 test.get_song_recommendations()
