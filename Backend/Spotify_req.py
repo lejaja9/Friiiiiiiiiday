@@ -5,9 +5,9 @@ from ClientId import *
 class song_rec:
     """A class that holds song features, activity features, and genre and returns recommendations. Taken from the Spotify API. Built with passion and a little frustration."""
 
-    def __init__(self, song_link, activity, time_of_day, genre):
+    def __init__(self, song_id, activity, time_of_day, genre):
         #initial information
-        self.song_link = song_link
+        self.song_ID = song_id
         self.activity = activity
         self.time_of_day = time_of_day
         self.genre = genre
@@ -46,11 +46,11 @@ class song_rec:
                                                                         'feeling 22': [('acousticness', 1), ('danceability', 3), ('energy', 3), ('instrumentalness', 1), ('liveness', 2), ('loudness', 3), ('speechiness', 3), ('tempo', 2), ('valence', 3)], \
                                                                             'driving a golf kart': [('acousticness', 1), ('danceability', 1), ('energy', 1), ('instrumentalness', 2), ('liveness', 1), ('loudness', 1), ('speechiness', 1), ('tempo', 2), ('valence', 2)], \
                                                                                 'walking the dog': [('acousticness', 1), ('danceability', 1), ('energy', 2), ('instrumentalness', 2), ('liveness', 1), ('loudness', 1), ('speechiness', 2), ('tempo', 2), ('valence', 2)], \
-                                                                                    'getting a pedicure': [('acousticness', 2), ('danceability', 0), ('energy', 1), ('instrumentalness', 3), ('liveness', 0), ('loudness', 0), ('speechiness', 1), ('tempo', 1), ('valence', 2)]}
+                                                                                    'getting a pedicure': [('acousticness', 2), ('danceability', 0), ('energy', 1), ('instrumentalness', 3), ('liveness', 0), ('loudness', 0), ('speechiness', 1), ('tempo', 1), ('valence', 2)], \
+                                                                                        'writing an angry Yelp review': [('acousticness', 1), ('danceability', 0), ('energy', 4), ('instrumentalness', 1), ('liveness', 1), ('loudness', 3), ('speechiness', 4), ('tempo', 3), ('valence', 0)]}
         
         #parameters for GET
         self.artist_ID = None
-        self.song_ID = None
         self.acousticness = None
         self.danceability = None
         self.energy = None
@@ -64,12 +64,12 @@ class song_rec:
         #dictionary of songs and info
         self.output = {}
 
-    def get_song_ID(self):
-        start = str(self.song_link).find('track/') + 6
-        end = str(self.song_link).find('?')
-        ID = str(self.song_link)[start:end]
-        self.song_ID = ID
-        return ID
+    # def get_song_ID(self):
+    #     start = str(self.song_link).find('track/') + 6
+    #     end = str(self.song_link).find('?')
+    #     ID = str(self.song_link)[start:end]
+    #     self.song_ID = ID
+    #     return ID
 
     def get_artist_id(self):
         token_url = "https://accounts.spotify.com/api/token"
@@ -88,8 +88,8 @@ class song_rec:
         r = requests.post(token_url, headers = token_header, data = token_data)
         token = r.json()['access_token']
 
-        song_id = self.get_song_ID() #input
-        song_url = f"https://api.spotify.com/v1/tracks/{song_id}"
+        #song_id = self.get_song_ID() #input
+        song_url = f"https://api.spotify.com/v1/tracks/{self.song_ID}"
         token_header = {
             "Authorization": "Bearer " + token
         }
@@ -164,6 +164,6 @@ class song_rec:
             print(tracks_api['tracks'][i]['external_urls']['spotify'])
             self.output[tracks_api['tracks'][i]['external_urls']['spotify'][31:]] = [tracks_api['tracks'][i]['name'], tracks_api['tracks'][i]['album']['artists'][0]['name'], tracks_api['tracks'][i]['album']['name'], tracks_api['tracks'][i]['album']['release_date'][:4], tracks_api['tracks'][i]['popularity']]
 
-test = song_rec('https://open.spotify.com/track/5R8dQOPq8haW94K7mgERlO?si=49e9d638b53a44aa', 'feeling 22', "my friend's sleepover", 'pop')
+test = song_rec('1yjY7rpaAQvKwpdUliHx0d', 'writing an angry Yelp review', "5 o'clock somewhere", 'pop')
 test.get_song_recommendations()
 print(test.output)
