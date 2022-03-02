@@ -61,6 +61,9 @@ class song_rec:
         self.tempo = None
         self.valence = None
 
+        #dictionary of songs and info
+        self.output = {}
+
     def get_song_ID(self):
         start = str(self.song_link).find('track/') + 6
         end = str(self.song_link).find('?')
@@ -150,16 +153,17 @@ class song_rec:
         r = requests.post(token_url, headers = token_header, data = token_data)
         token = r.json()['access_token']
 
-        rec_url = f"https://api.spotify.com/v1/recommendations?limit=9&market=US&seed_artists={self.artist_ID}&seed_genres={self.genre}&seed_tracks={self.song_ID}&target_acousticness={self.acousticness}&target_danceability={self.danceability}&target_energy={self.energy}&target_instrumentalness={self.instrumentalness}&target_liveness={self.liveness}&target_loudness={self.loudness}&target_speechiness={self.speechiness}&target_tempo={self.tempo}&target_valence={self.valence}"
+        rec_url = f"https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_artists={self.artist_ID}&seed_genres={self.genre}&seed_tracks={self.song_ID}&target_acousticness={self.acousticness}&target_danceability={self.danceability}&target_energy={self.energy}&target_instrumentalness={self.instrumentalness}&target_liveness={self.liveness}&target_loudness={self.loudness}&target_speechiness={self.speechiness}&target_tempo={self.tempo}&target_valence={self.valence}"
         token_header = {
             "Authorization": "Bearer " + token
         }
 
         res = requests.get(url = rec_url, headers = token_header)    
         tracks_api = res.json()
-        print(tracks_api)
-        # for i in range(len(tracks_api['tracks'])):
-        #     print(tracks_api['tracks'][i]['external_urls']['spotify'])
+        for i in range(len(tracks_api['tracks'])):
+            print(tracks_api['tracks'][i]['external_urls']['spotify'])
+            self.output[tracks_api['tracks'][i]['external_urls']['spotify'][31:]] = [tracks_api['tracks'][i]['name'], tracks_api['tracks'][i]['album']['artists'][0]['name'], tracks_api['tracks'][i]['album']['name'], tracks_api['tracks'][i]['album']['release_date'][:4], tracks_api['tracks'][i]['popularity']]
 
-test = song_rec('https://open.spotify.com/track/6mADjHs6FXdroPzEGW6KVJ?si=6130952bcdfc4a0e', 'on a run', 'sunrise', '2000s rockx')
+test = song_rec('https://open.spotify.com/track/3Zwu2K0Qa5sT6teCCHPShP?si=316ed159a437460f', 'playing Mario Kart', "my friend's sleepover", 'alternative')
 test.get_song_recommendations()
+print(test.output)
