@@ -5,9 +5,9 @@ from ClientId import *
 class song_rec:
     """A class that holds song features, activity features, and genre and returns recommendations. Taken from the Spotify API. Built with passion and a little frustration."""
 
-    def __init__(self, song_id, activity, time_of_day, genre):
+    def __init__(self, song_ID, activity, time_of_day, genre):
         #initial information
-        self.song_ID = song_id
+        self.song_ID = song_ID
         self.activity = activity
         self.time_of_day = time_of_day
         self.genre = genre
@@ -164,6 +164,6 @@ class song_rec:
             print(tracks_api['tracks'][i]['external_urls']['spotify'])
             self.output[tracks_api['tracks'][i]['external_urls']['spotify'][31:]] = [tracks_api['tracks'][i]['name'], tracks_api['tracks'][i]['album']['artists'][0]['name'], tracks_api['tracks'][i]['album']['name'], tracks_api['tracks'][i]['album']['release_date'][:4], tracks_api['tracks'][i]['popularity']]
 
-test = song_rec('1yjY7rpaAQvKwpdUliHx0d', 'writing an angry Yelp review', "5 o'clock somewhere", 'pop')
+test = song_rec('6mADjHs6FXdroPzEGW6KVJ', 'in the office', "my daily sprint meeting", 'alternative')
 test.get_song_recommendations()
 print(test.output)
