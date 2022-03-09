@@ -2,6 +2,7 @@ import requests
 import base64
 from ClientId import *
 
+
 class song_rec:
     """A class that holds song features, activity features, and genre and returns recommendations. Taken from the Spotify API. Built with passion and a little frustration."""
 
