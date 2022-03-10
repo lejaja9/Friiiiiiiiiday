@@ -165,6 +165,6 @@ class song_rec:
             print(tracks_api['tracks'][i]['external_urls']['spotify'])
             self.output[tracks_api['tracks'][i]['external_urls']['spotify'][31:]] = [tracks_api['tracks'][i]['name'], tracks_api['tracks'][i]['album']['artists'][0]['name'], tracks_api['tracks'][i]['album']['name'], tracks_api['tracks'][i]['album']['release_date'][:4], tracks_api['tracks'][i]['popularity']]
 
-test = song_rec('6mADjHs6FXdroPzEGW6KVJ', 'in the office', "my daily sprint meeting", 'alternative')
+test = song_rec('3CgZCQyuyxHRMWB9BTwmni', 'racing to a deadline', "rush hour", 'r&b')
 test.get_song_recommendations()
 print(test.output)
