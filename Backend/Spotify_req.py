@@ -13,6 +13,10 @@ class song_rec:
         self.activity = activity
         self.time_of_day = time_of_day
         self.genre = genre
+
+        #config vars only used for Heroku
+        self.Client_ID = os.environ.get("Client_ID")
+        self.Client_Secret = os.environ.get("Client_Secret")
         
         #information for parameters
         self.Night_parameters = {'acousticness': [0.051187302142530616, 0.2629954578833173, 0.5443586449949921, 0.8563105017492848], 'danceability': [0.28877092078723754, 0.527265145305271, 0.6994024737246376, 0.8441108936258267], 'energy': [0.14940366340223243, 0.4124318215497712, 0.5785720743553215, 0.7222509557052426, 0.8803082618937121], 'instrumentalness': [0.003154300485407463, 0.2800824849090645, 0.6309798578738262, 0.8978986216778286], 'liveness': [0.116978890214073, 0.329885867067773, 0.7033096435947523], 'loudness': [-30.64137521831628, -15.603954342871656, -8.693378697200863, -5.07960733626369], 'speechiness': [0.052176478894036496, 0.15368064548654295, 0.2870441191527784, 0.4474271751216467, 0.8835541269156066], 'tempo': [86.37858981732701, 118.81463727274055, 143.33951924769767, 171.02900275713338], 'valence': [0.1579563989441452, 0.3605310706961407, 0.5629927991264553, 0.8029163276483204]}
@@ -81,7 +85,7 @@ class song_rec:
         token_data = {}
 
         #message = f"{Client_ID}:{Client_Secret}"
-        message = f"{os.environ.get("Client_ID")}:{os.environ.get("Client_Secret")}"
+        message = f"{self.Client_ID}:{self.Client_Secret}"
         message64 = base64.b64encode(message.encode())
 
         token_header['Authorization'] = f"Basic {message64.decode()}"
@@ -147,7 +151,7 @@ class song_rec:
         token_data = {}
 
         #message = f"{Client_ID}:{Client_Secret}"
-        message = f"{os.environ.get("Client_ID")}:{os.environ.get("Client_Secret")}"
+        message = f"{self.Client_ID}:{self.Client_Secret}"
         message64 = base64.b64encode(message.encode())
 
         token_header['Authorization'] = f"Basic {message64.decode()}"
