@@ -1,5 +1,5 @@
 from flask import *
-from Backend.Spotify_req import *
+from Spotify_req import *
 
 app = Flask(__name__)
 

@@ -1,6 +1,8 @@
 import requests
 import base64
-from ClientId import *
+#from ClientId import *
+from boto.s3.connection import S3Connection
+import os
 
 
 class song_rec:
@@ -79,7 +81,7 @@ class song_rec:
         token_header = {}
         token_data = {}
 
-        message = f"{Client_ID}:{Client_Secret}"
+        message = f"{S3Connection(os.environ['Client_ID'])}:{S3Connection(os.environ['Client_Secret'])}"
         message64 = base64.b64encode(message.encode())
 
         token_header['Authorization'] = f"Basic {message64.decode()}"
@@ -144,7 +146,7 @@ class song_rec:
         token_header = {}
         token_data = {}
 
-        message = f"{Client_ID}:{Client_Secret}"
+        message = f"{S3Connection(os.environ['Client_ID'])}:{S3Connection(os.environ['Client_Secret'])}"
         message64 = base64.b64encode(message.encode())
 
         token_header['Authorization'] = f"Basic {message64.decode()}"
