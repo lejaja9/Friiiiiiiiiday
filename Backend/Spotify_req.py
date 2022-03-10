@@ -1,7 +1,6 @@
 import requests
 import base64
 #from ClientId import *
-from boto.s3.connection import S3Connection
 import os
 
 
