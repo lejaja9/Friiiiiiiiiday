@@ -1,22 +1,22 @@
 from flask import *
 import os
-from Spotify_req import *
+#from Spotify_req import *
 
 app = Flask(__name__)
 
-@app.route('/<string:song_id>/<string:activity>/<string:time>/<string:genre>/')
+# @app.route('/<string:song_id>/<string:activity>/<string:time>/<string:genre>/')
 
-def recs(song_id, activity, time, genre):
-    recommendations = song_rec(song_id, activity, time, genre)
-    recommendations.get_song_recommendations()
+# def recs(song_id, activity, time, genre):
+#     recommendations = song_rec(song_id, activity, time, genre)
+#     recommendations.get_song_recommendations()
     
-    return jsonify(recommendations.output)
+#     return jsonify(recommendations.output)
 
 
 @app.route('/')
 
 def home():
-    return "Vamos a la Playa! Martin secretly loves Con Calma!"
+    return str(os.environ.get("Client_ID"))
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
