@@ -1,1 +1,3 @@
-A work in progress
+¡Vamos a la Playlist! is a song recommendation application built by two college friends and with React, Flask, the Spotify API, Machine Learning, and a not-so-secret love for Spanish dance music. Our own API is hosted on Heroku, which can be accessed [here](https://vamos-a-la-playlist.herokuapp.com/). An example of an API request can be seen [here](https://vamos-a-la-playlist.herokuapp.com/5w9c2J52mkdntKOmRLeM2m/feeling%2022/5%20o%27clock%20somewhere/pop/).
+
+This app is a work in progress, and we are currently building the frontend (don't worry, the bulk of the hard math stuff is over). We are very excited to be able to show off this project soon!
