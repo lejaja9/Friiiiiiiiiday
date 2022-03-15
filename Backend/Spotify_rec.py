@@ -67,7 +67,7 @@ class song_rec:
         self.tempo = None
         self.valence = None
 
-        #dictionary of songs and info
+        #dictionary of songs and info... or the error message
         self.output = {}
 
     # def get_song_ID(self):
@@ -95,83 +95,96 @@ class song_rec:
         r = requests.post(token_url, headers = token_header, data = token_data)
         token = r.json()['access_token']
 
-        #song_id = self.get_song_ID() #input
         song_url = f"https://api.spotify.com/v1/tracks/{self.song_ID}"
         token_header = {
             "Authorization": "Bearer " + token
         }
 
         res = requests.get(url = song_url, headers = token_header)
-        self.artist_ID = res.json()['album']['artists'][0]['id']
-        #self.features = json.dumps(res.json(), indent=2)
+        try:
+            self.artist_ID = res.json()['album']['artists'][0]['id']
+        except:
+            self.output = 'Error 400: This is not a valid song ID.'
 
     def get_parameters(self):
-        if self.time_of_day in self.Night_events:
-            self.parameters = self.Night_parameters
-        elif self.time_of_day in self.Late_events:
-            self.parameters = self.Late_parameters
-        elif self.time_of_day in self.Morning_events:
-            self.parameters = self.Morning_parameters
-        elif self.time_of_day in self.Afternoon_events:
-            self.parameters = self.Afternoon_parameters
-        else:
-            self.parameters = self.Evening_parameters
+        try:
+            if self.time_of_day in self.Night_events:
+                self.parameters = self.Night_parameters
+            elif self.time_of_day in self.Late_events:
+                self.parameters = self.Late_parameters
+            elif self.time_of_day in self.Morning_events:
+                self.parameters = self.Morning_parameters
+            elif self.time_of_day in self.Afternoon_events:
+                self.parameters = self.Afternoon_parameters
+            elif self.time_of_day in self.Evening_events:
+                self.parameters = self.Evening_parameters
+            else:
+                raise ValueError('This is not a time of day we accounted. I blame Martin.')
+        except:
+            self.output = "Error 003: This is embarassing... it seems as if we had not accounted for this time of day. We will take a closer look at this!"
+        
 
     def get_activity_parameters(self):
         self.get_parameters()
-        list = self.activities[self.activity]
+        try:
+            list = self.activities[self.activity]
 
-        (xa, ya) = list[0]
-        self.acousticness = self.parameters[xa][ya]
-        (xd, yd) = list[1]
-        self.danceability = self.parameters[xd][yd]
-        (xe, ye) = list[2]
-        self.energy = self.parameters[xe][ye]
-        (xi, yi) = list[3]
-        self.instrumentalness = self.parameters[xi][yi]
-        (xl1, yl1) = list[4]
-        self.liveness = self.parameters[xl1][yl1]
-        (xl2, yl2) = list[5]
-        self.loudness = self.parameters[xl2][yl2]
-        (xs, ys) = list[6]
-        self.speechiness = self.parameters[xs][ys]
-        (xt, yt) = list[7]
-        self.tempo = self.parameters[xt][yt]
-        (xv, yv) = list[8]
-        self.valence = self.parameters[xv][yv]
+            (xa, ya) = list[0]
+            self.acousticness = self.parameters[xa][ya]
+            (xd, yd) = list[1]
+            self.danceability = self.parameters[xd][yd]
+            (xe, ye) = list[2]
+            self.energy = self.parameters[xe][ye]
+            (xi, yi) = list[3]
+            self.instrumentalness = self.parameters[xi][yi]
+            (xl1, yl1) = list[4]
+            self.liveness = self.parameters[xl1][yl1]
+            (xl2, yl2) = list[5]
+            self.loudness = self.parameters[xl2][yl2]
+            (xs, ys) = list[6]
+            self.speechiness = self.parameters[xs][ys]
+            (xt, yt) = list[7]
+            self.tempo = self.parameters[xt][yt]
+            (xv, yv) = list[8]
+            self.valence = self.parameters[xv][yv]
+        except:
+            if self.output == {}:
+                print(self.output)
+                self.output = "Error 002: Yikes! We did not account for this activity. Don't worry, we want this fixed as much as you do."
 
     def get_song_recommendations(self):
         self.get_artist_id()
         self.get_activity_parameters()
 
-        token_url = "https://accounts.spotify.com/api/token"
-        #method = "POST"
+        if self.output == {}:
+            token_url = "https://accounts.spotify.com/api/token"
+            #method = "POST"
 
-        token_header = {}
-        token_data = {}
+            token_header = {}
+            token_data = {}
 
-        #message = f"{Client_ID}:{Client_Secret}"
-        message = f"{self.Client_ID}:{self.Client_Secret}"
-        message64 = base64.b64encode(message.encode())
+            #message = f"{Client_ID}:{Client_Secret}"
+            message = f"{self.Client_ID}:{self.Client_Secret}"
+            message64 = base64.b64encode(message.encode())
 
-        token_header['Authorization'] = f"Basic {message64.decode()}"
+            token_header['Authorization'] = f"Basic {message64.decode()}"
 
-        token_data['grant_type'] = "client_credentials"
+            token_data['grant_type'] = "client_credentials"
 
-        r = requests.post(token_url, headers = token_header, data = token_data)
-        token = r.json()['access_token']
+            r = requests.post(token_url, headers = token_header, data = token_data)
+            token = r.json()['access_token']
 
-        rec_url = f"https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_artists={self.artist_ID}&seed_genres={self.genre}&seed_tracks={self.song_ID}&target_acousticness={self.acousticness}&target_danceability={self.danceability}&target_energy={self.energy}&target_instrumentalness={self.instrumentalness}&target_liveness={self.liveness}&target_loudness={self.loudness}&target_speechiness={self.speechiness}&target_tempo={self.tempo}&target_valence={self.valence}"
-        token_header = {
-            "Authorization": "Bearer " + token
-        }
+            rec_url = f"https://api.spotify.com/v1/recommendations?limit=12&market=US&seed_artists={self.artist_ID}&seed_genres={self.genre}&seed_tracks={self.song_ID}&target_acousticness={self.acousticness}&target_danceability={self.danceability}&target_energy={self.energy}&target_instrumentalness={self.instrumentalness}&target_liveness={self.liveness}&target_loudness={self.loudness}&target_speechiness={self.speechiness}&target_tempo={self.tempo}&target_valence={self.valence}"
+            token_header = {
+                "Authorization": "Bearer " + token
+            }
 
-        res = requests.get(url = rec_url, headers = token_header)    
-        tracks_api = res.json()
-        for i in range(len(tracks_api['tracks'])):
-            print(tracks_api['tracks'][i]['external_urls']['spotify'])
-            self.output[tracks_api['tracks'][i]['external_urls']['spotify'][31:]] = [tracks_api['tracks'][i]['name'], tracks_api['tracks'][i]['album']['artists'][0]['name'], tracks_api['tracks'][i]['album']['name'], tracks_api['tracks'][i]['album']['release_date'][:4], tracks_api['tracks'][i]['popularity']]
+            res = requests.get(url = rec_url, headers = token_header)    
+            tracks_api = res.json()
+            for i in range(len(tracks_api['tracks'])):
+                print(tracks_api['tracks'][i]['external_urls']['spotify'])
+                self.output[tracks_api['tracks'][i]['external_urls']['spotify'][31:]] = [tracks_api['tracks'][i]['name'], tracks_api['tracks'][i]['album']['artists'][0]['name'], tracks_api['tracks'][i]['album']['name'], tracks_api['tracks'][i]['album']['release_date'][:4], tracks_api['tracks'][i]['popularity']]
 
-test = song_rec('3CgZCQyuyxHRMWB9BTwmni', 'racing to a deadline', "rush hour", 'r&b')
-test.get_song_recommendations()
-print(test.output)
+# test = song_rec('3avYqdwHKEq8beXbeWCKqJ', 'racing to a deadline', "rush hour", 'alternative')
+# test.get_song_recommendations()
+# print(test.output)
