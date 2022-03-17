@@ -1,6 +1,8 @@
 import React from 'react';
+import Image from 'next/image';
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import { DropDown } from './Dropdown';
+import { Modal } from './Modal';
 
 export const SongPreferencesForm = () => {
   return (
@@ -17,22 +19,46 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
 
             <div className="flex items-center relative">
               <input
-                className="w-full bg-white appearance-none border-2 border-gray-200 rounded-3xl py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-cyan-600"
+                className="w-full bg-white appearance-none border-2 border-gray-200 rounded-3xl py-2 pl-4 pr-10 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-cyan-600"
                 id="inline-full-name"
                 type="text"
                 placeholder="Enter the link to your favorite song"
               />
-              <InformationCircleIcon
-                width="25px"
-                className="absolute right-4 hover:cursor-pointer"
-                // gray-700
-                color="#6b7280"
+
+              <Modal
+                headerText={'Getting a Spotify song link'}
+                button={
+                  <InformationCircleIcon
+                    width="25px"
+                    className="absolute right-4 bottom-2 hover:cursor-pointer"
+                    color="#6b7280"
+                    tabIndex={1}
+                  />
+                }
+                mainContent={
+                  <>
+                    <p className="mb-4 text-gray-600 text-lg font-medium tracking-widest leading-relaxed">
+                      <ul>
+                        <li>Open Spotify</li>
+                        <li>Find a song on Spotify</li>
+                        <li>
+                          Right click {'>'} Share {'>'} Copy Song Link
+                        </li>
+                      </ul>
+                    </p>
+                    <Image
+                      src="/../public/images/ModalImage.png"
+                      width={400}
+                      height={350}
+                    />
+                  </>
+                }
               />
             </div>
           </div>
         </div>
 
-        <div className="md:flex md:items-center mb-3 pb-3 border-b-2 border-gray-200">
+        <div className="md:flex md:items-center mb-3 pb-4 border-b-2 border-gray-100">
           <div className="md:w-1/3 flex justify-center md:justify-start">
             <label className="block text-color-1 font-light md:text-left mb-1 md:mb-0 pr-4">
               I am
@@ -47,7 +73,7 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
           </div>
         </div>
 
-        <div className="md:flex md:items-center mb-6">
+        <div className="md:flex md:items-center mb-3 pb-4 border-b-2 border-gray-100">
           <div className="md:w-1/3 flex justify-center md:justify-start">
             <label className="block text-color-2 font-light md:text-left mb-1 md:mb-0 pr-4">
               at
