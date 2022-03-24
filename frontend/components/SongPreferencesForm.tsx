@@ -3,7 +3,7 @@ import Image from 'next/image';
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import { DropDown } from './Dropdown';
 import { Modal } from './Modal';
-import ModalImage from '../public/images/ModalImage.png';
+import modalImage from '../public/modalImage.png';
 
 export const SongPreferencesForm = () => {
   return (
@@ -48,7 +48,7 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
                       </ul>
                     </p>
                     <Image
-                      src={ModalImage}
+                      src={modalImage}
                       width={400}
                       height={350}
                       alt="Right click a song on Spotify, then click 'Share',
