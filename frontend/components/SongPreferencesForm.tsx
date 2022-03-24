@@ -47,9 +47,11 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
                       </ul>
                     </p>
                     <Image
-                      src="/../public/images/ModalImage.png"
+                      src={`/images/ModalImage.png`}
                       width={400}
                       height={350}
+                      alt="Right click a song on Spotify, then click 'Share',
+                      then click 'Copy Song Link'"
                     />
                   </>
                 }
