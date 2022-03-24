@@ -58,13 +58,13 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
           </div>
         </div>
 
-        <div className="md:flex md:items-center mb-3 pb-4 border-b-2 border-gray-100">
-          <div className="md:w-1/3 flex justify-center md:justify-start">
-            <label className="block text-color-1 font-light md:text-left mb-1 md:mb-0 pr-4">
+        <div className="sm:flex sm:items-center mb-3 pb-4 border-b-2 border-gray-100">
+          <div className="sm:w-1/3 flex justify-center sm:justify-start">
+            <label className="block text-color-1 font-light sm:text-left mb-1 sm:mb-0 pr-4">
               I am
             </label>
           </div>
-          <div className="md:w-2/3 flex justify-center md:justify-end">
+          <div className="sm:w-2/3 flex justify-center sm:justify-end">
             <DropDown
               name="activity"
               options={['Option 1', 'Option 2', 'Option 3']}
@@ -73,13 +73,13 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
           </div>
         </div>
 
-        <div className="md:flex md:items-center mb-3 pb-4 border-b-2 border-gray-100">
-          <div className="md:w-1/3 flex justify-center md:justify-start">
-            <label className="block text-color-2 font-light md:text-left mb-1 md:mb-0 pr-4">
+        <div className="sm:flex sm:items-center mb-3 pb-4 border-b-2 border-gray-100">
+          <div className="sm:w-1/3 flex justify-center sm:justify-start">
+            <label className="block text-color-2 font-light sm:text-left mb-1 sm:mb-0 pr-4">
               at
             </label>
           </div>
-          <div className="md:w-2/3 flex justify-center md:justify-end">
+          <div className="sm:w-2/3 flex justify-center sm:justify-end">
             <DropDown
               name="time of day"
               options={['Option 1', 'Option 2', 'Option 3']}
@@ -88,16 +88,16 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
           </div>
         </div>
 
-        <div className="md:flex md:items-center mb-6">
-          <div className="md:w-1/3 flex justify-center md:justify-start">
+        <div className="sm:flex sm:items-center mb-6">
+          <div className="sm:w-1/3 flex justify-center sm:justify-start">
             <label
-              className="block text-color-3 font-light md:text-left mb-1 md:mb-0 pr-4"
+              className="block text-color-3 font-light sm:text-left mb-1 sm:mb-0 pr-4"
               htmlFor="inline-password"
             >
               inspired by
             </label>
           </div>
-          <div className="md:w-2/3 flex justify-center md:justify-end">
+          <div className="sm:w-2/3 flex justify-center sm:justify-end">
             <DropDown
               name="genre"
               options={['Option 1', 'Option 2', 'Option 3']}
