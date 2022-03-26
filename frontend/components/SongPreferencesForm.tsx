@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import { DropDown } from './Dropdown';
 import { Modal } from './Modal';
-import modalImage from '../public/modalImage.png';
 
 export const SongPreferencesForm = () => {
   return (
@@ -48,7 +47,7 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
                       </ul>
                     </p>
                     <Image
-                      src={modalImage}
+                      src="https://lh3.googleusercontent.com/lWLAwhHpkzq3ypKzfnq45otZ8f7pzUyjfYluCX3BxA868_P8WPEjzlPiASgxulrsJnjffcMNBOK3aXRIjKoArNzX_2xYgcEmJ0vpPKzQalF5LP9loafYoPKVWvOWkAbUipDzP46vQJjv3VEz4fXYiz-O2B58ahnPPwQyO5Yp2dNdCslNSBrrAd7SCsGFVkES_9_cJzxSQsuXlyA_Z3Y7HyclZkM4Zju-kmvMlCRQaHmhzw2fAk1FxzESnzwr2yoXuZYRhPJGkDQbJoucAqhqy-G0lfYRrIkRPm18Lj8StBEYlglfzh_7wVApS0ldHGsWO8DMsqrxztiGH4L5HMSZ2pWKFX8aePm8zKwaBQYyk4r2qciIs61sY6TK1So9yubb3fggFtxw8-4XmZlWgORJgtdW8s1_0A_5QX4LjOLG9Cpvdbzrj8MWKRi46V6MW0DHhkMx-zAbHHYVvQ8eLq3uHkfeu5weKaqOcdFWGDhUIY47k1zCi2OBydsgurHqTW2hJcNScZEFBe4eVJpVnyB1dr9muYLgAF-YFEsj0boKsXO01-VSqEDjZYiHUBY2qIk8oEC-wgGgEljnpFMkYOF-W7uatUEfRO7a8UNsq6rigOd-HBy8nEWW8A8Yi0TbqNhlTTLMbHTM_uwQdYVCK65GbfIzAMsqz8OAgT_EdLqU3aaDppWCrMVEbfZ6zHsP8v2ePZoJ9wHWcfTnPAjlY2gZGlGXX9uGsDpHS7RBemWQNACF1JMSfnxmGxBfpdhW=w1549-h1304-no?authuser=0"
                       width={400}
                       height={350}
                       alt="Right click a song on Spotify, then click 'Share',
