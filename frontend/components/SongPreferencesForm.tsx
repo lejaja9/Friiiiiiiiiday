@@ -3,23 +3,25 @@ import Image from 'next/image';
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import { DropDown } from './Dropdown';
 import { Modal } from './Modal';
+import { Listboxx } from './Listbox';
+import { Comboboxx } from './Combobox';
 
 export const SongPreferencesForm = () => {
   return (
-    <div className="grid place-items-center mt-12">
+    <div className="mt-12 grid place-items-center">
       <form className="w-full max-w-sm ">
-        <div className="w-full mb-6 grid place-items-center">
+        <div className="mb-6 grid w-full place-items-center">
           <div className="md:w-full">
             <label
-              className="font-sans text-[11px]  text-gray-900 dark:text-gray-300 z-50
-bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tracking-wider"
+              className="relative top-2  left-3 z-50 w-auto
+bg-gray-50 px-1 font-sans  text-[11px] tracking-wider text-gray-900 group-focus-within:text-red-600 dark:text-gray-300"
             >
               Spotify Song Link
             </label>
 
-            <div className="flex items-center relative">
+            <div className="relative flex items-center">
               <input
-                className="w-full bg-white appearance-none border-2 border-gray-200 rounded-3xl py-2 pl-4 pr-10 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-cyan-600"
+                className="w-full appearance-none rounded-3xl border-2 border-gray-200 bg-white py-2 pl-4 pr-10 leading-tight text-gray-700 focus:border-cyan-600 focus:bg-white focus:outline-none"
                 id="inline-full-name"
                 type="text"
                 placeholder="Enter the link to your favorite song"
@@ -37,7 +39,7 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
                 }
                 mainContent={
                   <>
-                    <p className="mb-4 text-gray-600 text-lg font-medium tracking-widest leading-relaxed">
+                    <p className="mb-4 text-lg font-medium leading-relaxed tracking-widest text-gray-600">
                       <ul>
                         <li>Open Spotify</li>
                         <li>Find a song on Spotify</li>
@@ -60,57 +62,60 @@ bg-gray-50 relative px-1  top-2 left-3 w-auto group-focus-within:text-red-600 tr
           </div>
         </div>
 
-        <div className="sm:flex sm:items-center mb-3 pb-4 border-b-2 border-gray-100">
-          <div className="sm:w-1/3 flex justify-center sm:justify-start">
-            <label className="block text-color-1 font-light sm:text-left mb-1 sm:mb-0 pr-4">
+        <div className="mb-3 border-b-2 border-gray-100 pb-4 sm:flex sm:items-center">
+          <div className="flex justify-center sm:w-1/3 sm:justify-start">
+            <label className="mb-1 block pr-4 font-light text-color-1 sm:mb-0 sm:text-left">
               I am
             </label>
           </div>
-          <div className="sm:w-2/3 flex justify-center sm:justify-end">
-            <DropDown
-              name="activity"
-              options={['Option 1', 'Option 2', 'Option 3']}
-              color={'bg-color-1'}
-            />
+          <div className="flex justify-center sm:w-2/3 sm:justify-end">
+            <Listboxx name="activity" />
           </div>
         </div>
 
-        <div className="sm:flex sm:items-center mb-3 pb-4 border-b-2 border-gray-100">
-          <div className="sm:w-1/3 flex justify-center sm:justify-start">
-            <label className="block text-color-2 font-light sm:text-left mb-1 sm:mb-0 pr-4">
+        <div className="mb-3 border-b-2 border-gray-100 pb-4 sm:flex sm:items-center">
+          <div className="flex justify-center sm:w-1/3 sm:justify-start">
+            <label className="mb-1 block pr-4 font-light text-color-1 sm:mb-0 sm:text-left">
               at
             </label>
           </div>
-          <div className="sm:w-2/3 flex justify-center sm:justify-end">
+          <div className="flex justify-center sm:w-2/3 sm:justify-end">
+            <Listboxx name="time of day" />
+          </div>
+        </div>
+
+        {/* <div className="mb-3 border-b-2 border-gray-100 pb-4 sm:flex sm:items-center">
+          <div className="flex justify-center sm:w-1/3 sm:justify-start">
+            <label className="mb-1 block pr-4 font-light text-color-2 sm:mb-0 sm:text-left">
+              at
+            </label>
+          </div>
+          <div className="flex justify-center sm:w-2/3 sm:justify-end">
             <DropDown
               name="time of day"
               options={['Option 1', 'Option 2', 'Option 3']}
               color={'bg-color-2'}
             />
           </div>
-        </div>
+        </div> */}
 
-        <div className="sm:flex sm:items-center mb-6">
-          <div className="sm:w-1/3 flex justify-center sm:justify-start">
+        <div className="mb-6 sm:flex sm:items-center">
+          <div className="flex justify-center sm:w-1/3 sm:justify-start">
             <label
-              className="block text-color-3 font-light sm:text-left mb-1 sm:mb-0 pr-4"
+              className="mb-1 block pr-4 font-light text-color-3 sm:mb-0 sm:text-left"
               htmlFor="inline-password"
             >
               inspired by
             </label>
           </div>
-          <div className="sm:w-2/3 flex justify-center sm:justify-end">
-            <DropDown
-              name="genre"
-              options={['Option 1', 'Option 2', 'Option 3']}
-              color={'bg-color-3'}
-            />
+          <div className="flex justify-center sm:w-2/3 sm:justify-end">
+            <Comboboxx name="genre" />
           </div>
         </div>
 
         <div className="w-full pt-4">
           <button
-            className="w-full shadow bg-emerald-900 hover:bg-emerald-800 focus:shadow-outline focus:outline-none text-white font-light tracking-widest py-2 px-4 rounded-3xl"
+            className="focus:shadow-outline w-full rounded-3xl bg-emerald-900 py-2 px-4 font-light tracking-widest text-white shadow hover:bg-emerald-800 focus:outline-none"
             type="button"
           >
             Show me the music!
