@@ -2,20 +2,10 @@ import React from 'react';
 import Image from 'next/image';
 import { useForm, Controller } from 'react-hook-form';
 import { InformationCircleIcon } from '@heroicons/react/outline';
-import { DropDown } from './Dropdown';
 import { activities, genres, times } from '../data/formOptions';
 import { Modal } from './Modal';
 import { Listbox } from './Listbox';
 import { Combobox } from './Combobox';
-
-const people = [
-  'Wade Cooper',
-  'Arlene Mccoy',
-  'Devon Webb',
-  'Tom Cook',
-  'Tanya Fox',
-  'Hellen Schmidt',
-];
 
 export const SongPreferencesForm = () => {
   const {
@@ -115,21 +105,6 @@ bg-gray-50 px-1 font-sans  text-[11px] tracking-wider text-gray-900 group-focus-
             />
           </div>
         </div>
-
-        {/* <div className="mb-3 border-b-2 border-gray-100 pb-4 sm:flex sm:items-center">
-          <div className="flex justify-center sm:w-1/3 sm:justify-start">
-            <label className="mb-1 block pr-4 font-light text-color-2 sm:mb-0 sm:text-left">
-              at
-            </label>
-          </div>
-          <div className="flex justify-center sm:w-2/3 sm:justify-end">
-            <DropDown
-              name="time of day"
-              options={['Option 1', 'Option 2', 'Option 3']}
-              color={'bg-color-2'}
-            />
-          </div>
-        </div> */}
 
         <div className="mb-6 sm:flex sm:items-center">
           <div className="flex justify-center sm:w-1/3 sm:justify-start">

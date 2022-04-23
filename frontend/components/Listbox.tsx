@@ -1,11 +1,5 @@
-import { Fragment, useState } from 'react';
-import {
-  useController,
-  UseControllerProps,
-  Field,
-  ControllerRenderProps,
-  FieldValues,
-} from 'react-hook-form';
+import { Fragment } from 'react';
+import { ControllerRenderProps, FieldValues } from 'react-hook-form';
 import { Listbox as HeadlessListbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 
