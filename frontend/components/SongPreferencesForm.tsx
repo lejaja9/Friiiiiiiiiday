@@ -1,15 +1,34 @@
 import React from 'react';
 import Image from 'next/image';
+import { useForm, Controller } from 'react-hook-form';
 import { InformationCircleIcon } from '@heroicons/react/outline';
 import { DropDown } from './Dropdown';
+import { activities, genres, times } from '../data/formOptions';
 import { Modal } from './Modal';
-import { Listboxx } from './Listbox';
-import { Comboboxx } from './Combobox';
+import { Listbox } from './Listbox';
+import { Combobox } from './Combobox';
+
+const people = [
+  'Wade Cooper',
+  'Arlene Mccoy',
+  'Devon Webb',
+  'Tom Cook',
+  'Tanya Fox',
+  'Hellen Schmidt',
+];
 
 export const SongPreferencesForm = () => {
+  const {
+    register,
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm();
+  const onSubmit = (data: any) => console.log(data);
   return (
     <div className="mt-12 grid place-items-center">
-      <form className="w-full max-w-sm ">
+      <form onSubmit={handleSubmit(onSubmit)} className="w-full max-w-sm">
         <div className="mb-6 grid w-full place-items-center">
           <div className="md:w-full">
             <label
@@ -25,6 +44,7 @@ bg-gray-50 px-1 font-sans  text-[11px] tracking-wider text-gray-900 group-focus-
                 id="inline-full-name"
                 type="text"
                 placeholder="Enter the link to your favorite song"
+                {...register('spotifySongLink', { required: true })}
               />
 
               <Modal
@@ -69,7 +89,14 @@ bg-gray-50 px-1 font-sans  text-[11px] tracking-wider text-gray-900 group-focus-
             </label>
           </div>
           <div className="flex justify-center sm:w-2/3 sm:justify-end">
-            <Listboxx name="activity" />
+            <Controller
+              name="activitiesbox"
+              control={control}
+              defaultValue={'activity'}
+              render={({ field }) => (
+                <Listbox options={activities} field={field} />
+              )}
+            />
           </div>
         </div>
 
@@ -80,7 +107,12 @@ bg-gray-50 px-1 font-sans  text-[11px] tracking-wider text-gray-900 group-focus-
             </label>
           </div>
           <div className="flex justify-center sm:w-2/3 sm:justify-end">
-            <Listboxx name="time of day" />
+            <Controller
+              name="timeOfDay"
+              control={control}
+              defaultValue={'time of day'}
+              render={({ field }) => <Listbox options={times} field={field} />}
+            />
           </div>
         </div>
 
@@ -109,17 +141,23 @@ bg-gray-50 px-1 font-sans  text-[11px] tracking-wider text-gray-900 group-focus-
             </label>
           </div>
           <div className="flex justify-center sm:w-2/3 sm:justify-end">
-            <Comboboxx name="genre" />
+            <Controller
+              name="genre"
+              control={control}
+              defaultValue={'genre'}
+              render={({ field }) => (
+                <Combobox options={genres} field={field} />
+              )}
+            />
           </div>
         </div>
 
         <div className="w-full pt-4">
-          <button
+          <input
+            type="submit"
+            value="Show me the music!"
             className="focus:shadow-outline w-full rounded-3xl bg-emerald-900 py-2 px-4 font-light tracking-widest text-white shadow hover:bg-emerald-800 focus:outline-none"
-            type="button"
-          >
-            Show me the music!
-          </button>
+          ></input>
         </div>
       </form>
     </div>

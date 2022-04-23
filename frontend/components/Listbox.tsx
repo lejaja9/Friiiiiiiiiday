@@ -1,42 +1,36 @@
 import { Fragment, useState } from 'react';
-import { Listbox, Transition } from '@headlessui/react';
+import {
+  useController,
+  UseControllerProps,
+  Field,
+  ControllerRenderProps,
+  FieldValues,
+} from 'react-hook-form';
+import { Listbox as HeadlessListbox, Transition } from '@headlessui/react';
 import { CheckIcon, SelectorIcon } from '@heroicons/react/solid';
 
-const people = [
-  { name: 'Wade Cooper' },
-  { name: 'Arlene Mccoy' },
-  { name: 'Devon Webb' },
-  { name: 'Tom Cook' },
-  { name: 'Tanya Fox' },
-  { name: 'Hellen Schmidt' },
-  { name: 'afaf fdf' },
-  { name: 'Martin Stoy' },
-  { name: 'Jaja W' },
-];
-
 interface ListboxProps {
-  name: string;
-  options?: string[];
+  options: string[];
+  field: ControllerRenderProps<FieldValues, any>;
   color?: string;
 }
 
-export const Listboxx: React.FC<ListboxProps> = ({ name }) => {
-  console.log('name', name);
-  const [selected, setSelected] = useState({ name: name });
+export const Listbox: React.FC<ListboxProps> = ({ options, field }) => {
+  const { onChange, value } = field;
 
   return (
     <div className="w-36">
-      <Listbox value={selected} onChange={setSelected}>
+      <HeadlessListbox value={value} onChange={onChange}>
         <div className="relative mt-1">
-          <Listbox.Button className="relative  w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md hover:bg-slate-100 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
-            <span className="block truncate">{selected.name}</span>
+          <HeadlessListbox.Button className="relative  w-full cursor-default rounded-lg bg-white py-2 pl-3 pr-10 text-left shadow-md hover:bg-slate-100 focus:outline-none focus-visible:border-indigo-500 focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 focus-visible:ring-offset-2 focus-visible:ring-offset-orange-300 sm:text-sm">
+            <span className="block truncate">{value}</span>
             <span className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
               <SelectorIcon
                 className="h-5 w-5 text-gray-400"
                 aria-hidden="true"
               />
             </span>
-          </Listbox.Button>
+          </HeadlessListbox.Button>
           <Transition
             as={Fragment}
             leave="transition ease-in duration-100"
@@ -45,22 +39,22 @@ export const Listboxx: React.FC<ListboxProps> = ({ name }) => {
           >
             {/* absolute -top-2 right-0 max-h-40 w-56 origin-top-right -translate-y-full transform divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 sm:text-sm */}
             {/* absolute mt-1  max-h-40 w-full overflow-auto rounded-md bg-white  py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5  focus:outline-none  sm:text-sm */}
-            <Listbox.Options
+            <HeadlessListbox.Options
               className={
                 true
                   ? 'absolute z-50 mt-1  max-h-40 w-56 overflow-auto rounded-md bg-white  py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5  focus:outline-none  sm:text-sm'
                   : 'absolute -top-2 right-0 z-50 max-h-40 w-56 origin-top-right -translate-y-full transform divide-y divide-gray-100 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 sm:text-sm'
               }
             >
-              {people.map((person, personIdx) => (
-                <Listbox.Option
-                  key={personIdx}
+              {options.map((option, optionIdx) => (
+                <HeadlessListbox.Option
+                  key={optionIdx}
                   className={({ active }) =>
                     `relative cursor-default select-none py-2 pl-10 pr-4 ${
                       active ? 'bg-slate-100 text-slate-900' : 'text-gray-900'
                     }`
                   }
-                  value={person}
+                  value={option}
                 >
                   {({ selected }) => (
                     <>
@@ -69,7 +63,7 @@ export const Listboxx: React.FC<ListboxProps> = ({ name }) => {
                           selected ? 'font-medium' : 'font-normal'
                         }`}
                       >
-                        {person.name}
+                        {option}
                       </span>
                       {selected ? (
                         <span className="absolute inset-y-0 left-0 flex items-center pl-3 text-amber-600">
@@ -78,12 +72,12 @@ export const Listboxx: React.FC<ListboxProps> = ({ name }) => {
                       ) : null}
                     </>
                   )}
-                </Listbox.Option>
+                </HeadlessListbox.Option>
               ))}
-            </Listbox.Options>
+            </HeadlessListbox.Options>
           </Transition>
         </div>
-      </Listbox>
+      </HeadlessListbox>
     </div>
   );
 };
