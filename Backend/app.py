@@ -13,7 +13,9 @@ def recs(song_id, activity, time, genre):
     recommendations.get_activity_parameters()
     recommendations.get_song_recommendations()
     
-    return jsonify(recommendations.output)
+    response = jsonify(recommendations.output)
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 
 @app.route('/')
