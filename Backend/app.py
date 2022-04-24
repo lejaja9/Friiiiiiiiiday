@@ -8,6 +8,9 @@ app = Flask(__name__)
 
 def recs(song_id, activity, time, genre):
     recommendations = song_rec(song_id, activity, time, genre)
+    recommendations.get_artist_id()
+    recommendations.get_parameters()
+    recommendations.get_activity_parameters()
     recommendations.get_song_recommendations()
     
     return jsonify(recommendations.output)

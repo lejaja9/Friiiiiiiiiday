@@ -1,4 +1,3 @@
-boto
 brotlipy==0.7.0
 certifi==2021.10.8
 cffi
