@@ -193,5 +193,14 @@ class song_rec:
             res = requests.get(url = rec_url, headers = token_header)    
             tracks_api = res.json()
             for i in range(len(tracks_api['tracks'])):
-                print(tracks_api['tracks'][i]['external_urls']['spotify'])
+                #print(tracks_api['tracks'][i]['external_urls']['spotify'])
                 self.output[tracks_api['tracks'][i]['external_urls']['spotify'][31:]] = [tracks_api['tracks'][i]['name'], tracks_api['tracks'][i]['album']['artists'][0]['name'], tracks_api['tracks'][i]['album']['name'], tracks_api['tracks'][i]['album']['release_date'][:4], tracks_api['tracks'][i]['popularity']]
+
+
+# test = song_rec('0wVluBsVAVzBKrqspuCcwR', 'on a run', "breakfast", 'alternative')
+# ^^^ song above is "Check Yes Juliet"
+# test.get_artist_id()
+# test.get_parameters()
+# test.get_activity_parameters()
+# test.get_song_recommendations()
+# print(test.output)

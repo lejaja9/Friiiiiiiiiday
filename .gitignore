@@ -2,3 +2,4 @@ Backend/ClientId.py
 Backend/data/Cleaning/Weekdays
 Backend/data/MSSD/track_features
 Backend/data/MSSD/mini_data
+Backend/.env
