@@ -22,7 +22,6 @@ def recs(song_id, activity, time, genre):
 
 def home():
     response = "¡Vamos a la Playlist! Martin secretly loves Con Calma!"
-    response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
 if __name__ == "__main__":
