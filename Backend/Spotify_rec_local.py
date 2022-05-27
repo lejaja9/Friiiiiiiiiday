@@ -1,24 +1,22 @@
+#Class for local testing
+
 import requests
 import base64
-import os
+from ClientId import *
 
 
 class song_rec:
-    """A class that holds song features, activity features, and genre and returns recommendations. Taken from the Spotify API. Built with passion and a little frustration."""
+    """A class that holds song features, activity features, and genre; and returns recommendations. Taken from the Spotify API. Built with passion and a little frustration."""
 
     def __init__(self, song_ID, activity, time_of_day, genre):
         """
         Initial information and parameters for this class.
         """
-
+        
         self.song_ID = song_ID
         self.activity = activity
         self.time_of_day = time_of_day
         self.genre = genre
-
-        #config vars only used for Heroku
-        self.Client_ID = os.environ.get("Client_ID")
-        self.Client_Secret = os.environ.get("Client_Secret")
         
         #information for parameters
         self.Night_parameters = {'acousticness': [0.051187302142530616, 0.2629954578833173, 0.5443586449949921, 0.8563105017492848], 'danceability': [0.28877092078723754, 0.527265145305271, 0.6994024737246376, 0.8441108936258267], 'energy': [0.14940366340223243, 0.4124318215497712, 0.5785720743553215, 0.7222509557052426, 0.8803082618937121], 'instrumentalness': [0.003154300485407463, 0.2800824849090645, 0.6309798578738262, 0.8978986216778286], 'liveness': [0.116978890214073, 0.329885867067773, 0.7033096435947523], 'loudness': [-30.64137521831628, -15.603954342871656, -8.693378697200863, -5.07960733626369], 'speechiness': [0.052176478894036496, 0.15368064548654295, 0.2870441191527784, 0.4474271751216467, 0.8835541269156066], 'tempo': [86.37858981732701, 118.81463727274055, 143.33951924769767, 171.02900275713338], 'valence': [0.1579563989441452, 0.3605310706961407, 0.5629927991264553, 0.8029163276483204]}
@@ -72,6 +70,12 @@ class song_rec:
         #dictionary of songs and info... or the error message
         self.output = {}
 
+    # def get_song_ID(self):
+    #     start = str(self.song_link).find('track/') + 6
+    #     end = str(self.song_link).find('?')
+    #     ID = str(self.song_link)[start:end]
+    #     self.song_ID = ID
+    #     return ID
 
     def get_artist_id(self):
         """
@@ -84,8 +88,7 @@ class song_rec:
         token_header = {}
         token_data = {}
 
-        #message = f"{Client_ID}:{Client_Secret}"
-        message = f"{self.Client_ID}:{self.Client_Secret}"
+        message = f"{Client_ID}:{Client_Secret}"
         message64 = base64.b64encode(message.encode())
 
         token_header['Authorization'] = f"Basic {message64.decode()}"
@@ -106,12 +109,10 @@ class song_rec:
         except:
             self.output = 'Error 400: This is not a valid song ID.'
 
-
     def get_parameters(self):
         """
         Looks at the time of day and picks the appropriate set of parameters, which will then be used to generate song recommendations
         """
-
         try:
             if self.time_of_day in self.Night_events:
                 self.parameters = self.Night_parameters
@@ -134,7 +135,6 @@ class song_rec:
         Remember to first get the set of parameters with self.get_parameters()
         This function looks at the activity and chooses the appropriate parameter values, which will be used directly in the API call for song recommendations
         """
-
         try:
             list = self.activities[self.activity]
 
@@ -158,9 +158,7 @@ class song_rec:
             self.valence = self.parameters[xv][yv]
         except:
             if self.output == {}:
-                print(self.output)
                 self.output = "Error 002: Yikes! We did not account for this activity. Don't worry, we want this fixed as much as you do."
-
 
     def get_song_recommendations(self):
         """
@@ -175,7 +173,7 @@ class song_rec:
             token_header = {}
             token_data = {}
 
-            message = f"{self.Client_ID}:{self.Client_Secret}"
+            message = f"{Client_ID}:{Client_Secret}"
             message64 = base64.b64encode(message.encode())
 
             token_header['Authorization'] = f"Basic {message64.decode()}"
@@ -193,12 +191,10 @@ class song_rec:
             res = requests.get(url = rec_url, headers = token_header)    
             tracks_api = res.json()
             for i in range(len(tracks_api['tracks'])):
-                #print(tracks_api['tracks'][i]['external_urls']['spotify'])
+                print(tracks_api['tracks'][i]['external_urls']['spotify'])
                 self.output[tracks_api['tracks'][i]['external_urls']['spotify'][31:]] = [tracks_api['tracks'][i]['name'], tracks_api['tracks'][i]['album']['artists'][0]['name'], tracks_api['tracks'][i]['album']['name'], tracks_api['tracks'][i]['album']['release_date'][:4], tracks_api['tracks'][i]['popularity']]
 
-
-# test = song_rec('0wVluBsVAVzBKrqspuCcwR', 'on a run', "breakfast", 'alternative')
-# ^^^ song above is "Check Yes Juliet"
+# test = song_rec('1MekQcRadmgfYGjFgpl8iS', 'taking a shower', '8:09 PM', 'alternative')
 # test.get_artist_id()
 # test.get_parameters()
 # test.get_activity_parameters()

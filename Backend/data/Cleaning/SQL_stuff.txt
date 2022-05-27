@@ -1,0 +1,25 @@
+# Uploading data into a table
+CREATE TABLE ? LIKE ?;
+
+LOAD DATA LOCAL INFILE "/Users/lejaja9/Documents/G14/Friiiiiiiiiday/data/MSSD/training_set/?"
+INTO TABLE ?
+COLUMNS TERMINATED BY ','
+OPTIONALLY ENCLOSED BY '"'
+ESCAPED BY '"'
+LINES TERMINATED BY '\n'
+IGNORE 1 LINES;
+
+# CREATING AM/PM tables
+CREATE TABLE ? AS WITH t1 AS (SELECT track_id_clean, `date`, hour_of_day, ROW_NUMBER() OVER(PARTITION BY `date`, hour_of_day ORDER BY UUID()) AS picks FROM ? WHERE `date` = '?' AND hour_of_day <= 19 AND skip_1 = 'FALSE' and skip_2 = 'FALSE' AND hist_user_behavior_n_seekfwd <= 1 AND hist_user_behavior_n_seekback <= 1) SELECT track_id_clean, `date`, hour_of_day FROM t1 WHERE picks <= 5000 ORDER BY `date`, hour_of_day;
+
+#Joining track features
+CREATE VIEW ? AS
+
+SELECT track_id, danceability, energy, `key`, loudness, speechiness, acousticness, instrumentalness, liveness, valence, tempo, (duration*1000) AS duration_ms, time_signature, `date`, hour_of_day FROM Friiiiiiiiiday.track_features0 a JOIN ? b ON a.track_id = b.track_id_clean
+UNION ALL
+SELECT track_id, danceability, energy, `key`, loudness, speechiness, acousticness, instrumentalness, liveness, valence, tempo, (duration*1000) AS duration_ms, time_signature, `date`, hour_of_day FROM Friiiiiiiiiday.track_features1 a JOIN ? b ON a.track_id = b.track_id_clean
+
+#Average Hourly Stats
+CREATE TABLE ? AS
+
+SELECT AVG(danceability) AS danceability, AVG(energy) AS energy, AVG(`key`) AS `key`, AVG(loudness) AS loudness, AVG(speechiness) AS speechiness, AVG(acousticness) AS acousticness, AVG(instrumentalness) AS instrumentalness, AVG(liveness) AS liveness, AVG(valence) AS valence, AVG(tempo) AS tempo, AVG(duration_ms) AS duration_ms, AVG(time_signature) AS time_signature, DAYNAME(`date`) AS day_of_week ,hour_of_day FROM ? GROUP BY DAYNAME(`date`), hour_of_day ORDER BY hour_of_day;
