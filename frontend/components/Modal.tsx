@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 import { XIcon } from '@heroicons/react/outline';
 import ClickAwayListener from 'react-click-away-listener';
+import { Dialog, Transition } from '@headlessui/react';
 interface ModalProps {
   mainContent?: JSX.Element;
   headerText?: string;
@@ -15,70 +16,99 @@ export const Modal: React.FC<ModalProps> = ({
   footer,
 }) => {
   const [showModal, setShowModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(true);
+
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+  function openModal() {
+    setIsOpen(true);
+  }
 
   return (
     <>
       {
-        <div tabIndex={1} onClick={() => setShowModal(true)}>
+        <div tabIndex={1} onClick={openModal}>
           {button}
         </div>
       }
+      {/* <div className="fixed inset-0 flex items-center justify-center">
+        <button
+          type="button"
+          onClick={openModal}
+          className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+        >
+          Open dialog
+        </button>
+      </div> */}
 
-      {showModal ? (
-        <>
-          <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
-            <ClickAwayListener onClickAway={() => setShowModal(false)}>
-              <div className="relative w-auto my-6 mx-auto max-w-3xl">
-                {/*content*/}
-                <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
-                  {/*header*/}
-                  <div className="flex items-start justify-between p-5 border-b border-solid border-blueGray-200 rounded-t">
-                    {headerText && (
-                      <h3 className="text-2xl text-gray-600 font-semibold">
-                        {headerText}
-                      </h3>
-                    )}
+      <Transition appear show={isOpen} as={Fragment}>
+        <Dialog as="div" className="relative z-30" onClose={closeModal}>
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0"
+            enterTo="opacity-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100"
+            leaveTo="opacity-0"
+          >
+            <div className="fixed inset-0 bg-black bg-opacity-25" />
+          </Transition.Child>
+
+          <div className="fixed inset-0 overflow-y-auto">
+            <div className="flex min-h-full items-center justify-center p-4 text-center">
+              <Transition.Child
+                as={Fragment}
+                enter="ease-out duration-300"
+                enterFrom="opacity-0 scale-95"
+                enterTo="opacity-100 scale-100"
+                leave="ease-in duration-200"
+                leaveFrom="opacity-100 scale-100"
+                leaveTo="opacity-0 scale-95"
+              >
+                <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                  <div className="border-blueGray-200 flex items-start justify-between rounded-t border-b border-solid pb-3">
+                    <Dialog.Title
+                      as="h3"
+                      className="text-2xl font-semibold text-gray-600"
+                    >
+                      {headerText}
+                    </Dialog.Title>
                     <button
-                      className="p-1 ml-auto bg-transparent border-0 float-right text-3xl leading-none font-semibold outline-none"
-                      onClick={() => setShowModal(false)}
+                      className="float-right ml-auto border-0 bg-transparent p-1 text-3xl font-semibold leading-none outline-none"
+                      onClick={closeModal}
                     >
                       <span
-                        className="bg-transparent h-6 w-6 text-2xl block focus:outline-2"
+                        className="block h-6 w-6 bg-transparent text-2xl focus:outline-2"
                         tabIndex={0}
                       >
                         <XIcon width={25} />
                       </span>
                     </button>
                   </div>
+                  <div className="mt-2">{mainContent}</div>
 
-                  {/*body*/}
-                  <div className="relative p-6 flex-auto">{mainContent}</div>
-                  {/*footer*/}
                   {footer && (
-                    <div className="flex items-center justify-end p-6 border-t border-solid border-blueGray-200 rounded-b">
+                    <div className="mt-4">
                       <button
-                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                         type="button"
-                        onClick={() => setShowModal(false)}
+                        className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                        onClick={closeModal}
                       >
                         Close
                       </button>
-                      <button
-                        className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button"
-                        onClick={() => setShowModal(false)}
-                      >
-                        Save Changes
-                      </button>
                     </div>
                   )}
-                </div>
-              </div>
-            </ClickAwayListener>
+                </Dialog.Panel>
+              </Transition.Child>
+            </div>
           </div>
-          <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
-        </>
-      ) : null}
+        </Dialog>
+      </Transition>
     </>
   );
 };
+
+//
